@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 router.route("/").get(Server);
-router.route("/addPool").post(AddPool);
+// router.route("/addPool").post(AddPool);
 router.route("/getAllPairs").get(GetAllPairs);
 router.route("/getAllPairsLength").get(GetAllPairsLength);
 
