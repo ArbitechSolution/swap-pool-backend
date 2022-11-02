@@ -13,6 +13,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(RPCURL));
 const {
   swapFactoryAbi,
   swapFactoryAddress,
+  tokenCommonAbi,
 } = require("../../utils/swapFactory");
 poolRoutes.use(bodyParser.json());
 //// server checking
@@ -108,27 +109,14 @@ const GetRecord = async (val) => {
     console.log("address", token0address, token1address);
   }
 
-  // await delay(1000);
-  // var resultToken0Abi = getAbi(token0address);
-  // const token0Contract = new web3.eth.Contract(
-  //   JSON.parse(resultToken0Abi),
-  //   token0address
-  // );
-  // token0symbol = await token0Contract.methods.symbol().call();
-  token0symbol = "bnb";
-  // console.log("token0symbol", token0symbol);
+  const token0Contract = new web3.eth.Contract(tokenCommonAbi, token0address);
+  token0symbol = await token0Contract.methods.symbol().call();
+  console.log("token0symbol", token0symbol);
 
-  // await delay(1000);
-  // var resultToken1Abi = await getAbi(token1address);
-  // if (resultToken1Abi != "Contract source code not verified") {
-  //   const token1Contract = new web3.eth.Contract(
-  //     JSON.parse(resultToken1Abi),
-  //     token1address
-  //   );
-  //   token1symbol = await token1Contract.methods.symbol().call();
-  token1symbol = "wire";
-  //   console.log("token1symbol", token1symbol);
-  // }
+  const token1Contract = new web3.eth.Contract(tokenCommonAbi, token1address);
+  token1symbol = await token1Contract.methods.symbol().call();
+  console.log("token1symbol", token1symbol);
+
   AddPool({
     id: val,
     address: getPairAdd,
